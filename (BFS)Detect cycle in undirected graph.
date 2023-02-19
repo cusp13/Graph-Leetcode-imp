@@ -1,0 +1,46 @@
+Detect cycle in undirected graph...
+
+Approach: is we will start from node 1 and traverse in two direction if any node is found visited then check wheather it marked 
+from another path or not if yes then true else false
+
+
+class Solution {
+public:
+bool isValid(int x,int y,vector<vector<char>>&grid){
+    int n=grid.size();
+    int m=grid[0].size();
+    if(x>=0 && x<n && y>=0 && y<m && grid[x][y]=='1'){
+        return true;
+    }
+    return false;
+}
+   void dfs(int x,int y,vector<vector<char>>&grid){
+       grid[x][y]='0';
+       if(isValid(x-1,y,grid)){
+           dfs(x-1,y,grid);
+       }
+       if(isValid(x+1,y,grid)){
+           dfs(x+1,y,grid);
+       }
+       if(isValid(x,y-1,grid)){
+           dfs(x,y-1,grid);
+       }
+       if(isValid(x,y+1,grid)){
+           dfs(x,y+1,grid);
+       }
+   }
+    int numIslands(vector<vector<char>>&grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='1'){
+                    cnt++;
+                    dfs(i,j,grid);
+                }
+            }
+        }
+        return cnt;
+    }
+};
