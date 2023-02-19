@@ -1,0 +1,30 @@
+//Detect cycle in a directed graph...
+
+ bool dfs(int node,vector<int>adj[],vector<int>&vis,vector<int>&pvis){
+      vis[node]=1;
+      pvis[node]=1;
+      for(auto it:adj[node]){
+          if(!vis[it]){
+              if(dfs(it,adj,vis,pvis)){
+                  return true;
+              }
+          }
+          else if(pvis[it]){
+              return true;
+          }
+      }
+      pvis[node]=0;
+      return false;
+  }
+  bool isCyclic(int V, vector<int> adj[]) {
+        vector<int>vis(V+1,0);
+        vector<int>pvis(V+1,0);
+        for(int i=0;i<V;i++){
+            if(vis[i]!=1){
+                if(dfs(i,adj,vis,pvis)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
