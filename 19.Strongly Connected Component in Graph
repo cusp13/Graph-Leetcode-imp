@@ -1,0 +1,62 @@
+Given a Directed Graph with V vertices (Numbered from 0 to V-1) and E edges, Find the number of strongly connected components in the graph.
+Example 1:
+
+Input:
+
+Output:
+3
+Explanation:
+
+We can clearly see that there are 3 Strongly
+Connected Components in the Graph
+
+Approach: first we have to sort the give graph by topologically...and the reverse the graph(tranpose).
+then count the number of connected component.
+
+class Solution
+{
+	void dfs(int node,vector<vector<int>>&adj,vector<int>&vis,stack<int>&st){
+	    vis[node]=1;
+	    for(auto it:adj[node]){
+	        if(!vis[it])
+	        dfs(it,adj,vis,st);
+	    }
+	    st.push(node);
+	}
+	void dfs1(int node,vector<int>&vis,vector<int>list[]){
+	    vis[node]=1;
+	    for(auto it:list[node]){
+	        if(vis[it]!=1){
+	            dfs1(it,vis,list);
+	        }
+	    }
+	    
+	}
+	public:
+    int kosaraju(int V, vector<vector<int>>& adj)
+    {
+         vector<int>vis(V,0);
+         stack<int>st;
+         for(int i=0;i<V;i++){
+             if(!vis[i]){
+                 dfs(i,adj,vis,st);
+             }
+         }
+         vector<int>list[V];
+         for(int i=0;i<V;i++){
+             for(auto it:adj[i]){
+                 list[it].push_back(i);
+             }
+         }
+         vector<int>vis1(V,0);
+         int count=0;
+         while(!st.empty()){
+             int top=st.top();
+             st.pop();
+             if(!vis1[top]){
+                 count++;
+                 dfs1(top,vis1,list);
+             }
+         }
+         return count;
+    }
