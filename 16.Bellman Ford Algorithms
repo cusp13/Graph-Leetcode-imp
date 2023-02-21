@@ -1,0 +1,38 @@
+Distance from the Source (Bellman-Ford Algorithm)
+MediumAccuracy: 48.11%Submissions: 33K+Points: 4
+Lamp
+Don't Miss Out on the Chance to Work with Leading Companies! Visit the GFG Job Fair Now!  
+
+Given a weighted, directed and connected graph of V vertices and E edges, Find the shortest distance of all the vertex's from the source vertex S.
+Note: If the Graph contains a negative cycle then return an array consisting of only -1.
+
+Example 1:
+
+Input:
+
+E = [[0,1,9]]
+S = 0
+Output:
+0 9
+Explanation:
+Shortest distance of all nodes from
+source is printed.
+// CODE
+
+vector<int> bellman_ford(int V, vector<vector<int>>&adj, int S) {
+        vector<int>dist(V,1e8);
+        dist[S]=0;
+        for(int i=0;i<V-1;i++){
+            for(auto it:adj){
+                if(dist[it[0]]!=1e8 && dist[it[0]]+it[2]<dist[it[1]]){
+                    dist[it[1]]=dist[it[0]]+it[2];
+                }
+            }
+        }
+        for(auto it:adj){
+                if(dist[it[0]]!=1e8 && dist[it[0]]+it[2]<dist[it[1]]){
+                    return {-1};
+                }
+            }
+        return dist;
+    }
